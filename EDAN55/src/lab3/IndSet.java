@@ -63,7 +63,10 @@ public class IndSet {
 	}
 	
 	//TODO implement remove method
-	public void remove(LinkedList<Integer>[] graph, int node){
-		
+	public void remove(LinkedList<Integer>[] graph, Integer node){
+		for(int i:grapth[node]){
+			graph[i].remove(node);
+		}
+		graph[i]=null;
 	}
 }
