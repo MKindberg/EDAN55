@@ -1,8 +1,0 @@
-package lab3;
-
-public class IndSet {
-	
-	private linkedList<LinkedList<Integer>> graph;
-	
-	public void
-}

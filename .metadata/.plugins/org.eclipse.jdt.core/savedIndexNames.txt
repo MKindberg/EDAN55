@@ -1,4 +1,0 @@
-INDEX VERSION 1.129+D:\Programming\Repos\EDAN55\EDAN55\.metadata\.plugins\org.eclipse.jdt.core
-1007340512.index
-2768476762.index
-1259207542.index
