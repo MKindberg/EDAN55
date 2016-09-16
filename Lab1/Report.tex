@@ -1,0 +1,70 @@
+\documentclass{tufte-handout}
+\usepackage{amsmath,amsthm}
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[separate-uncertainty]{siunitx}
+\usepackage{tikz}
+
+\usepackage{amstext} % for \text macro
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+
+
+\newtheorem{claim}{Claim}[section]
+\title{\sf Marking Trees}
+\date{}
+\begin{document}
+\section{Lab Report: Marking Trees}
+
+
+by Marcus Kindberg
+
+\subsection{Results}
+
+For $i\in\{1,2,3\}$, the number of rounds $R_i$ spent until the tree
+is completely marked in process $i$ is given in the following table.
+The table shows the result of $1000$ repeated
+trails.
+
+\medskip\noindent
+\begin{tabular}{
+    S[table-format = 7]
+    S[table-format = 1.1(1)e1]
+    S[table-format = 1.4(1)e1]
+    S[table-format = 1.0 e1]
+  } 
+% WARNING: This table the (brilliant) siunitx package.
+% This allows typesetting of nicely aligned numbers.
+% If this is too much to absorb, just use a normal Latex table.
+% (Or do the table in another tool, export as PDF, and include it.)
+% Or do the whole report in your favourite word processor instead.
+\toprule
+
+{ $N$ } & { $R_1$ } & {$R_2$} & {$R_3$} \\\midrule
+3 & 2.5 \pm 0.9 & 2 & 2 \\
+7 & 7 \pm 2 & 4.5 \pm 0.6 & 4  \\
+15 & 1.7 \pm 7 e1 & 1.0 \pm 0.2 e1 & 8 \\
+31 & 4 \pm 2 e1 & 2.3 \pm 0.3 e1 & 2 e1 \\
+63 & 1.1 \pm 0.4 e2 & 5.1 \pm 0.6 e1 & 3 e1 \\
+127 & 2.7 \pm 0.8 e2 & 1.08 \pm 0.09 e2 & 6 e1 \\
+255 & 6 \pm 2 e2 & 2.3 \pm 0.1 e2 & 1   e2 \\
+511 & 1.4 \pm 0.3 e3 & 4.7 \pm 0.2 e2 & 3   e2 \\
+1023 & 3.2 \pm 0.7 e3 & 9.7 \pm 0.3 e2 & 5   e2 \\
+$\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ \\
+524287 & 3.2 \pm 0.3 e6 & 5.230 \pm 0.006 e5 & 3   e5 \\
+1048575 & 6.8\pm 0.7 e6 & 1.0468 \pm 0.0009 e6 & 5   e5 \\ \bottomrule
+\end{tabular}
+
+\subsection{Analysis}
+
+Our experimental data indicates that $\mathbf E [R_1]$ is linearithmic,
+while $\mathbf E[R_2]$ and $\mathbf E[R_3]$ are linear.
+
+Theoretically, the behaviour of $R_1$ can be explained as follows: 
+
+The problem is an "easier" version of the coupon collecting problem, which therefore can be used as an upper bound. 
+An easier version of this problem would be if we, when we choose a node to mark, also mark its sibling and its  parent. This would be equal to a version of the coupon collecting problem where you get three cards each round instead of one. 
+Since both the upper and lower bound can be reduced to coupon collecting, which is linearithmic, the problem itself is linearithmic too.
+
+\end{document}
