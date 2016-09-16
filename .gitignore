@@ -63,6 +63,7 @@ $RECYCLE.BIN/
 *.lnk
 
 #Eclipse folders
+.metadata
 .metadata/
 .recommenders/
 bin/
