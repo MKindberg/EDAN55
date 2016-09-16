@@ -1,0 +1,10 @@
+package lab3;
+
+import java.util.LinkedList;
+
+public class IndSet {
+	
+	private LinkedList<LinkedList<Integer>> graph;
+	
+	public void
+}
