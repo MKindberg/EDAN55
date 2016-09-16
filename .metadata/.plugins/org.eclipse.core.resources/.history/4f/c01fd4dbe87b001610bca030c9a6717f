@@ -1,0 +1,81 @@
+package lab2;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
+
+
+public class Maxcut {
+	
+	private Random r = new Random();
+	private int[][] edges;
+	private int V;
+	boolean[] nodes;
+	
+	public static void main(String[] args) {
+		
+		int max = 0;
+		Maxcut m = new Maxcut();
+		for(int i = 0;i<10000;i++){
+			int temp = m.readFile("pw09_100.9.txt");
+			if(temp>max)
+				max = temp;
+		}
+		System.out.println(max);
+	}
+	
+	public int alg(){
+		int sum=0;
+		nodes = new boolean[V+1];
+		for(int i = 1;i<V+1;i++){
+			nodes[i] = r.nextBoolean();
+		}
+		
+		for(int i = 0;i<edges.length;i++){
+			if(nodes[edges[i][0]]!=nodes[edges[i][1]]){
+				sum+=edges[i][2];
+			}
+		}
+	}
+	
+	public int readFile(String fileName){
+		int sum = 0;
+		int E;
+		boolean[] nodes;
+		try (BufferedReader br = new BufferedReader(new FileReader(fileName));){
+			
+			String line = br.readLine();
+			String[] head = line.split(" ");
+			V = Integer.parseInt(head[0]);
+			E = Integer.parseInt(head[1]);
+			
+			edges = new int[E][3];
+			
+			nodes = new boolean[V+1];
+			for(int i = 1;i<V+1;i++){
+				nodes[i] = r.nextBoolean();
+			}
+			line = br.readLine();
+			int i = 0;
+			while(line!=null){
+				String[] edge = line.split(" ");
+				int l = Integer.parseInt(edge[0]);
+				int r = Integer.parseInt(edge[1]);
+				int w = Integer.parseInt(edge[2]);
+				if(nodes[l]!=nodes[r]){
+					sum+=w;
+				}
+				edges[i++]=new int[]{l, r, w};
+				line = br.readLine();
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return sum;
+		
+	}
+}

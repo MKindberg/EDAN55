@@ -1,0 +1,36 @@
+package lab2;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+
+public class Maxcut {
+	
+	private int V;
+	private int E;
+	
+	public static void main(String[] args) {
+		Maxcut m = new Maxcut();
+		m.readFile("");
+	}
+	
+	
+	
+	public void readFile(String fileName){
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(fileName));
+			String line = br.readLine();
+			
+			while(line!=null){
+				
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+}
