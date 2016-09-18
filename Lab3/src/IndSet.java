@@ -14,26 +14,26 @@ public class IndSet {
 		for (int j = 30; j <= 60; j += 10) {
 			LinkedList<Integer>[] graph = i.readInput("g" + j + ".in");
 			long start = System.currentTimeMillis();
-			System.out.println(j + ": " + i.R0(graph) + ", Calls: " + i.nbrOfCalls + ", Time: "
-					+ (System.currentTimeMillis() - start) + " ms");
+			System.out.println("Nodes: " + j + ", Max setsize: " + i.R0(graph) + ", Calls: " + i.nbrOfCalls + " ("
+					+ (int) Math.pow(1.3, j) + ") , Time: " + (System.currentTimeMillis() - start) + " ms");
 		}
 
 		System.out.println();
 		System.out.println("R1:");
-		for (int j = 40; j <= 100; j += 10) {
+		for (int j = 30; j <= 100; j += 10) {
 			LinkedList<Integer>[] graph = i.readInput("g" + j + ".in");
 			long start = System.currentTimeMillis();
-			System.out.println(j + ": " + i.R1(graph) + ", Calls: " + i.nbrOfCalls + ", Time: "
-					+ (System.currentTimeMillis() - start) + " ms");
+			System.out.println("Nodes: " + j + ", Max setsize: " + i.R1(graph) + ", Calls: " + i.nbrOfCalls + " ("
+					+ (int) Math.pow(1.19, j) + ") , Time: " + (System.currentTimeMillis() - start) + " ms");
 		}
 
 		System.out.println();
 		System.out.println("R2:");
-		for (int j = 40; j <= 120; j += 10) {
+		for (int j = 30; j <= 120; j += 10) {
 			LinkedList<Integer>[] graph = i.readInput("g" + j + ".in");
 			long start = System.currentTimeMillis();
-			System.out.println(j + ": " + i.R2(graph) + ", Calls: " + i.nbrOfCalls + ", Time: "
-					+ (System.currentTimeMillis() - start) + " ms");
+			System.out.println("Nodes: " + j + ", Max setsize: " + i.R2(graph) + ", Calls: " + i.nbrOfCalls + " ("
+					+ (int) Math.pow(1.15, j) + ") , Time: " + (System.currentTimeMillis() - start) + " ms");
 		}
 
 	}
@@ -73,6 +73,7 @@ public class IndSet {
 		// case 1:
 		if (isEmpty(graph))
 			return 0;
+
 		// case 2:
 		for (int i = 0; i < graph.length; i++)
 			if (graph[i] != null && graph[i].size() < 2) {
@@ -106,8 +107,8 @@ public class IndSet {
 		if (isEmpty(graph))
 			return 0;
 
-		// case 1.5
-		for (int i = 0; i < graph.length; i++)
+		// case 2:
+		for (int i = 0; i < graph.length; i++) {
 			if (graph[i] != null && graph[i].size() == 2)
 				if (graph[graph[i].getFirst()].contains(graph[i].get(1))) {
 					remove(graph, graph[i].getFirst());
@@ -126,14 +127,13 @@ public class IndSet {
 					add(graph, l, i);
 					return 1 + R2(graph);
 				}
-		// case 2:
-		for (int i = 0; i < graph.length; i++)
 			if (graph[i] != null && graph[i].size() < 2) {
 				if (graph[i].size() == 1)
 					remove(graph, graph[i].getFirst());
 				graph[i] = null;
 				return 1 + R2(graph);
 			}
+		}
 
 		// case 3:
 		int max = 0;
