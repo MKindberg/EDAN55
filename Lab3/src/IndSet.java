@@ -15,7 +15,7 @@ public class IndSet {
 			LinkedList<Integer>[] graph = i.readInput("g" + j + ".in");
 			long start = System.currentTimeMillis();
 			System.out.println("Nodes: " + j + ", Max setsize: " + i.R0(graph) + ", Calls: " + i.nbrOfCalls + " ("
-					+ (int) Math.pow(1.3, j) + ") , Time: " + (System.currentTimeMillis() - start) + " ms");
+					+ (int) Math.pow(1.22, j)*44 + ") , Time: " + (System.currentTimeMillis() - start) + " ms");
 		}
 
 		System.out.println();
@@ -24,12 +24,12 @@ public class IndSet {
 			LinkedList<Integer>[] graph = i.readInput("g" + j + ".in");
 			long start = System.currentTimeMillis();
 			System.out.println("Nodes: " + j + ", Max setsize: " + i.R1(graph) + ", Calls: " + i.nbrOfCalls + " ("
-					+ (int) Math.pow(1.19, j) + ") , Time: " + (System.currentTimeMillis() - start) + " ms");
+					+ (int) Math.pow(1.17, j)*3 + ") , Time: " + (System.currentTimeMillis() - start) + " ms");
 		}
 
 		System.out.println();
 		System.out.println("R2:");
-		for (int j = 30; j <= 120; j += 10) {
+		for (int j = 30; j <= 130; j += 10) {
 			LinkedList<Integer>[] graph = i.readInput("g" + j + ".in");
 			long start = System.currentTimeMillis();
 			System.out.println("Nodes: " + j + ", Max setsize: " + i.R2(graph) + ", Calls: " + i.nbrOfCalls + " ("

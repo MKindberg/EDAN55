@@ -105,24 +105,16 @@ T_0(n) &\leq\max(T_0(n-1), T_0(n-1)+T_0(n-1-d_{\mbox{max}})) \\ &\leq T_0(n-1)+T
 \end{align*}
 with $d_{\mbox{max}}$ the degree of the vertex we branch on. The hard part is the one when there are no isolated vertices, in which case the vertex $u$ we are branching on has at least one neighbor. 
 
-For R1 we have that\sidenote{Derive similar recursive bounds on $T_1(n)$ and $T_2(n)$.}
- \[
- T_1(n)=[\ldots]
- \]
+For R1 we have that
+\begin{align*}
+T_1(n) &\leq\max(T_1(n-1), T_1(n-2), T_1(n-1)+T_1(n-1-d_{\mbox{max}})) \\ &\leq T_1(n-1)+T_1(n-3)
+\end{align*}
 
 For R2 we have that
- \[
- T_2(n)=[\ldots]
- \]
+\begin{align*}
+T_2(n) &\leq\max(T_2(n-1), T_1(n-2), T_1(n-3), T_2(n-1)+T_2(n-1-d_{\mbox{max}})) \\ &\leq T_2(n-1)+T_2(n-4)
+\end{align*}
 \paragraph{Worst Case Upper Bound}
 The running times of algorithm~$R_0$, $R_1$, and $R_2$ are in
-$[\ldots],[\ldots],$ and $[\ldots]$, respectively.\sidenote{Replace
-  the $[\ldots]$ by a function of $n$ on the form $O(c^n)$.
-  Use the recursive bounds you've derived above.
-  \emph{Hint: A recurrence of the form $T(n)\leq \sum_{i=1}^k
-    a_iT(n-i)$ is called a linear homogeneous recurrence relation with
-    constant coefficients.
-    To solve it, you can set $T(n)\leq c^n$ where $c$ is the largest
-    real root to the characteristic polynomial $x^k-\sum_{i=1}^k
-    a_ix^{k-i}$}.}. \newpage
+$O(1.62^n)$, $O(1.47^n),$ and $O(1.38^n)$, respectively. \newpage
 \end{document}
