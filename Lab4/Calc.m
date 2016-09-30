@@ -1,17 +1,27 @@
-%% three
-n=4;
-rand = ones(n)/n;
-prob = [0 2/3 1/3 0;0 0 1 0;1/3 1/3 0 1/3;1/4 1/4 1/4 1/4];
-totProb = rand*0.15+prob*0.85;
-[1 0 0 0]*totProb^100
+%%
+fileID = fopen('wikipedia.txt');
+txt = textscan(fileID, '%f');
+M = cell2mat(txt);
+n = M(1);
 
-%% three
-n=5;
 rand = ones(n)/n;
-prob=[0.0 1.0 0.0 0.0 0.0 ;
-0.0 0.0 0.4 0.4 0.2 ;
-0.0 0.0 0.0 1.0 0.0 ;
-1.0 0.0 0.0 0.0 0.0 ;
-0.5 0.0 0.5 0.0 0.0 ;];
+
+prob = zeros(n);
+for i=2:2:length(M)
+    prob(M(i)+1, M(i+1)+1)=prob(M(i)+1, M(i+1)+1)+1;
+end
+for i=1:n
+    s = sum(prob(i,:));
+    for j=1:n
+        if s==0
+            prob(i, j)=1/n;
+        else
+            prob(i, j)=prob(i, j)/s;
+        end
+    end
+end
+
 totProb = rand*0.15+prob*0.85;
-[1 0 0 0 0]*totProb^100
+start = [1 zeros(1,n-1)];
+start*totProb^100
+fclose(fileID);

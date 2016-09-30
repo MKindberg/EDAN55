@@ -14,7 +14,6 @@ public class PageRank {
 		PageRank p = new PageRank();
 		p.run("wikipedia", rounds);
 		p.printGraph();
-		p.toMatlab();
 		// for (String file : files)
 		// p.run(file, rounds);
 	}
