@@ -76,3 +76,6 @@ bin/
 *.log
 *.out
 *.synctex.gz
+*.td
+*.gr
+Lab5/Graphs/README.md
