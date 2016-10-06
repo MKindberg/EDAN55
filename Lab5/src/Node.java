@@ -36,8 +36,10 @@ public class Node {
 		else
 			for (int i = 0; i < permutations.length; i++) {
 				int max = 0;
-				for (Node n : children)
-					max += n.getPermMax(permutations[i]);
+				for (Node n : children) {
+					String p = "";
+					max += n.getPermMax(n.getSharedPerm(permutations[i], nodes));
+				}
 				indSets[i] = addSol(permutations[i]) + max;
 			}
 	}
@@ -75,5 +77,22 @@ public class Node {
 			if (permutations[i].matches(p) && indSets[i] > max)
 				max = indSets[i];
 		return max;
+	}
+
+	/**
+	 * Returns a permutation string that can be used in getPermMax
+	 * 
+	 * @param perm
+	 * @param nodes
+	 * @return
+	 */
+	public String getSharedPerm(String perm, LinkedList<Integer> nodes) {
+		String res = "";
+		for (int i = 0; i < this.nodes.size(); i++)
+			if (nodes.contains(this.nodes.get(i)) && perm.charAt(nodes.indexOf(this.nodes.get(i))) == '1')
+				res += '1';
+			else
+				res += '0';
+		return res;
 	}
 }
