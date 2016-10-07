@@ -14,18 +14,29 @@ public class IndSetTree {
 
 	public static void main(String[] args) {
 		IndSetTree i = new IndSetTree();
-		i.readInput(".\\Graphs\\ThomsenGraph");
+		i.readInput("./Graphs/FibonacciTree_10");
 		i.solve();
 	}
 
 	public void solve() {
+		int max = 0;
 		for (int i = tree.length - 1; i >= 0; i--) {
 			tree[i].solveNode();
-			System.out.print(i + ": ");
-			tree[i].printSol();
+			// System.out.println(i + ": " + tree[i].getMaxSol());
+//			System.out.print(i + ": ");
+//			tree[i].printSol();
+			if (max < tree[i].getMaxSol())
+				max = tree[i].getMaxSol();
 		}
 		IndSet ind = new IndSet();
 		System.out.println(ind.R2(G));
+		System.out.println(max);
+		System.out.println();
+//		for (int i = 0; i < tree.length; i++) {
+//			System.out.print(i + ": ");
+//			tree[i].printChildren();
+//			System.out.println();
+//		}
 	}
 
 	public void readInput(String file) {
@@ -94,8 +105,8 @@ public class IndSetTree {
 					nds.add(Integer.parseInt(nodes[i]) - 1);
 				}
 
-				tree[j++] = new Node(nds);
-
+				tree[j] = new Node(nds, j);
+				j++;
 				line = br.readLine();
 			}
 
@@ -117,9 +128,12 @@ public class IndSetTree {
 				int node1 = Integer.parseInt(edge[0]) - 1;
 				int node2 = Integer.parseInt(edge[1]) - 1;
 				T[node1].add(node2);
-				tree[node1].addChild(tree[node2]);
+				T[node2].add(node1);
+				//tree[node1].addChild(tree[node2]);
 				line = br.readLine();
 			}
+			tree[0].addChild2(T, tree);
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

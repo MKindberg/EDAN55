@@ -62,7 +62,7 @@ public class PageRank {
 	private int[] div(int[] vec, int num) {
 		int[] res = new int[vec.length];
 		for (int i = 0; i < vec.length; i++)
-			res[i] = (int) Math.round(100 * ((double) vec[i] / num));
+			res[i] = (int) Math.round(10000 * ((double) vec[i] / num));
 		return res;
 	}
 

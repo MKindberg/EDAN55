@@ -1,22 +1,38 @@
 import java.util.LinkedList;
 
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 public class Node {
+	int id;
 	LinkedList<Integer> nodes;
 	LinkedList<Integer>[] graph;
 	LinkedList<Node> children;
 	int[] indSets;
 	String[] permutations;
 	boolean visited = false;
+	boolean hasParent = false;
 
+	public LinkedList<Node> getChildren(){
+		return children;
+	}
+	
 	public void addChild(Node n) {
 		children.add(n);
+	}
+	public void addChild2(LinkedList<Integer>[] T, Node[] tree){
+		for(int i:T[id]){
+			addChild(tree[i]);
+			T[i].remove((Integer) id);
+			tree[i].addChild2(T, tree);
+		}
 	}
 
 	public void addGraph(LinkedList<Integer>[] graph) {
 		this.graph = graph;
 	}
 
-	public Node(LinkedList<Integer> nodes) {
+	public Node(LinkedList<Integer> nodes, int id) {
+		this.id = id;
 		this.nodes = nodes;
 		this.children = new LinkedList<Node>();
 		indSets = new int[(int) Math.pow(2, nodes.size())];
@@ -36,6 +52,8 @@ public class Node {
 	}
 
 	public void solveNode() {
+		if(visited)
+			return;
 		if (children.isEmpty())
 			for (int i = 0; i < permutations.length; i++)
 				indSets[i] = addSol(permutations[i]);
@@ -52,11 +70,15 @@ public class Node {
 						if (perm.charAt(j) == '1')
 							m--;
 					max += m > 0 ? m : 0;
+					//max+=m;
 				}
 
-				indSets[i] = addSol(permutations[i]) > 0 ? addSol(permutations[i]) + max : -1;
+				indSets[i] = addSol(permutations[i]) >= 0 ? addSol(permutations[i]) + max : -1;
+				//indSets[i] = addSol(permutations[i]) + max;
 			}
 		}
+		System.out.print(id+": ");
+		printSol();
 		visited = true;
 	}
 
@@ -100,13 +122,6 @@ public class Node {
 		return max;
 	}
 
-	/**
-	 * Returns a permutation string that can be used in getPermMax
-	 * 
-	 * @param perm
-	 * @param nodes
-	 * @return
-	 */
 	public String getSharedPerm(String perm, LinkedList<Integer> nodes, LinkedList<Integer>[] graph) {
 		String res = "";
 		for (int i = 0; i < this.nodes.size(); i++)
@@ -114,7 +129,7 @@ public class Node {
 				res += '1';
 			else {
 				for (int j = 0; j < perm.length(); j++)
-					if (perm.charAt(j) == '1' && graph[j].contains(nodes.indexOf(this.nodes.get(i)))) {
+					if ((perm.charAt(j) == '1' && graph[j].contains(nodes.indexOf(this.nodes.get(i))))||(nodes.contains(this.nodes.get(i)) && perm.charAt(nodes.indexOf(this.nodes.get(i))) == '0')) {
 						res += '-';
 						break;
 					}
@@ -137,5 +152,18 @@ public class Node {
 			if (max < i)
 				max = i;
 		return max;
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	public void printChildren(){
+		for(Node n:children)
+			System.out.print(n+" ");
+	}
+	
+	public String toString(){
+		return id+"";
 	}
 }

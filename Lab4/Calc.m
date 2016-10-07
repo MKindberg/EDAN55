@@ -1,4 +1,4 @@
-fileID = fopen('tiny.txt');
+fileID = fopen('three.txt');
 txt = textscan(fileID, '%f');
 M = cell2mat(txt);
 n = M(1);
@@ -22,12 +22,13 @@ for i=1:n
     end
 end
 
-%totProb = rand*0.15+H*0.85;
+totProb = rand*0.15+(H+D)*0.85;
 start = [1 zeros(1,n-1)];
+totProb^10
 %start*totProb^100
-for i=1:100
+for i=1:10
     starto = start*(0.85*H+0.85*D+0.15*rand);
-    if(round(starto, 2)==round(start, 2))
+    if(round(10000*starto))==round(10000*start)
         i-1
         break;
     end
