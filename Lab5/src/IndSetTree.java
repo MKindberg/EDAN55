@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class IndSetTree {
@@ -13,30 +15,44 @@ public class IndSetTree {
 	int width;
 
 	public static void main(String[] args) {
-		IndSetTree i = new IndSetTree();
-		i.readInput("./Graphs/FibonacciTree_10");
-		i.solve();
+		//File[] files = new File("./Graphs").listFiles();
+		//Arrays.sort(files);
+		//for (int j =0;j<files.length;j+=2) {
+			IndSetTree i = new IndSetTree();
+			String file = "./Graphs/GossetGraph";
+			//String file = files[j].toString().substring(0, (int)files[j].toString().length()-3);
+			System.out.println("File: " + file);
+			i.readInput(file);
+			i.solve();
+		//}
 	}
 
 	public void solve() {
 		int max = 0;
+		if (width>15)
+			return;
+		long start = System.currentTimeMillis();
 		for (int i = tree.length - 1; i >= 0; i--) {
 			tree[i].solveNode();
 			// System.out.println(i + ": " + tree[i].getMaxSol());
-//			System.out.print(i + ": ");
-//			tree[i].printSol();
+			// System.out.print(i + ": ");
+			// tree[i].printSol();
 			if (max < tree[i].getMaxSol())
 				max = tree[i].getMaxSol();
 		}
+		System.out.println("Nodes: " + G.length);
+		System.out.println("Width: " + (width - 1));
+		System.out.println("Time: " + (System.currentTimeMillis() - start) + "ms");
 		IndSet ind = new IndSet();
-		System.out.println(ind.R2(G));
-		System.out.println(max);
+		System.out.println("Ans: " + tree[0].getMaxSol());
+		System.out.println("Sol: " + ind.R2(G));
+
 		System.out.println();
-//		for (int i = 0; i < tree.length; i++) {
-//			System.out.print(i + ": ");
-//			tree[i].printChildren();
-//			System.out.println();
-//		}
+		// for (int i = 0; i < tree.length; i++) {
+		// System.out.print(i + ": ");
+		// tree[i].printChildren();
+		// System.out.println();
+		// }
 	}
 
 	public void readInput(String file) {
@@ -129,7 +145,7 @@ public class IndSetTree {
 				int node2 = Integer.parseInt(edge[1]) - 1;
 				T[node1].add(node2);
 				T[node2].add(node1);
-				//tree[node1].addChild(tree[node2]);
+				// tree[node1].addChild(tree[node2]);
 				line = br.readLine();
 			}
 			tree[0].addChild2(T, tree);

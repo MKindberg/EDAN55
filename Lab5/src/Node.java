@@ -77,8 +77,8 @@ public class Node {
 				//indSets[i] = addSol(permutations[i]) + max;
 			}
 		}
-		System.out.print(id+": ");
-		printSol();
+//		System.out.print(id+": ");
+//		printSol();
 		visited = true;
 	}
 
