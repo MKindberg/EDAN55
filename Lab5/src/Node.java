@@ -3,45 +3,64 @@ import java.util.LinkedList;
 public class Node {
 	LinkedList<Integer> nodes;
 	LinkedList<Integer>[] graph;
-	int parent;
 	LinkedList<Node> children;
 	int[] indSets;
 	String[] permutations;
+	boolean visited = false;
 
-	public static void main(String[] args) {
-
+	public void addChild(Node n) {
+		children.add(n);
 	}
 
-	public Node(LinkedList<Integer> nodes, LinkedList<Integer>[] graph, int parent, LinkedList<Node> children) {
-		this.nodes = nodes;
+	public void addGraph(LinkedList<Integer>[] graph) {
 		this.graph = graph;
-		this.parent = parent;
-		this.children = children;
-		indSets = new int[(int) Math.pow(2, graph.length)];
+	}
 
-		permutations = new String[(int) Math.pow(2, graph.length)];
-		for (int i = 0; i < Math.pow(2, graph.length); i++) {
+	public Node(LinkedList<Integer> nodes) {
+		this.nodes = nodes;
+		this.children = new LinkedList<Node>();
+		indSets = new int[(int) Math.pow(2, nodes.size())];
+
+		permutations = new String[(int) Math.pow(2, nodes.size())];
+		for (int i = 0; i < Math.pow(2, nodes.size()); i++) {
 			permutations[i] = "";
 			String bin = Integer.toBinaryString(i);
-			for (int j = 0; j < graph.length - bin.length(); j++)
+			for (int j = 0; j < nodes.size() - bin.length(); j++)
 				permutations[i] += "0";
 			permutations[i] += bin;
 		}
+	}
+
+	public LinkedList<Integer> getNodes() {
+		return nodes;
 	}
 
 	public void solveNode() {
 		if (children.isEmpty())
 			for (int i = 0; i < permutations.length; i++)
 				indSets[i] = addSol(permutations[i]);
-		else
+		else {
+			for (Node n : children)
+				if (!n.isVisited())
+					n.solveNode();
 			for (int i = 0; i < permutations.length; i++) {
 				int max = 0;
 				for (Node n : children) {
-					String p = "";
-					max += n.getPermMax(n.getSharedPerm(permutations[i], nodes));
+					String perm = n.getSharedPerm(permutations[i], nodes);
+					int m = n.getPermMax(perm);
+					for (int j = 0; j < perm.length(); j++)
+						if (perm.charAt(j) == '1')
+							m--;
+					max += m > 0 ? m : 0;
 				}
 				indSets[i] = addSol(permutations[i]) + max;
 			}
+		}
+		visited = true;
+	}
+
+	public boolean isVisited() {
+		return visited;
 	}
 
 	private int addSol(String perm) {
@@ -52,7 +71,7 @@ public class Node {
 		for (int n : marked)
 			for (int m : marked)
 				if (graph[n].contains(m))
-					return -1;
+					return 0;
 		return marked.size();
 	}
 
@@ -66,13 +85,12 @@ public class Node {
 
 	public int getPermMax(String perm) {
 		String p = "";
-		for (int i = 0; i < p.length(); i++)
+		for (int i = 0; i < perm.length(); i++)
 			if (perm.charAt(i) == '1')
 				p += '1';
 			else
 				p += '.';
-
-		int max = -1;
+		int max = 0;
 		for (int i = 0; i < permutations.length; i++)
 			if (permutations[i].matches(p) && indSets[i] > max)
 				max = indSets[i];
@@ -94,5 +112,11 @@ public class Node {
 			else
 				res += '0';
 		return res;
+	}
+
+	public void printSol() {
+		for (int i : indSets)
+			System.out.print(i + " ");
+		System.out.println();
 	}
 }
