@@ -22,7 +22,7 @@ public class IndSetTree {
 		for (int i = tree.length - 1; i >= 0; i--) {
 			tree[i].solveNode();
 			System.out.print(i + ": ");
-			tree[i].printSol();
+			System.out.println(tree[i].getMaxSol());
 		}
 		IndSet ind = new IndSet();
 		System.out.println(ind.R2(G));

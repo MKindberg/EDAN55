@@ -46,12 +46,12 @@ public class Node {
 			for (int i = 0; i < permutations.length; i++) {
 				int max = 0;
 				for (Node n : children) {
-					String perm = n.getSharedPerm(permutations[i], nodes);
+					String perm = n.getSharedPerm(permutations[i], nodes, graph);
 					int m = n.getPermMax(perm);
 					for (int j = 0; j < perm.length(); j++)
 						if (perm.charAt(j) == '1')
 							m--;
-					max += m > 0 ? m : 0;
+					max = m;// max += m > 0 ? m : 0;
 				}
 				indSets[i] = addSol(permutations[i]) + max;
 			}
@@ -71,7 +71,7 @@ public class Node {
 		for (int n : marked)
 			for (int m : marked)
 				if (graph[n].contains(m))
-					return 0;
+					return -1;
 		return marked.size();
 	}
 
@@ -88,6 +88,8 @@ public class Node {
 		for (int i = 0; i < perm.length(); i++)
 			if (perm.charAt(i) == '1')
 				p += '1';
+			else if (perm.charAt(i) == '-')
+				p += '0';
 			else
 				p += '.';
 		int max = 0;
@@ -104,13 +106,21 @@ public class Node {
 	 * @param nodes
 	 * @return
 	 */
-	public String getSharedPerm(String perm, LinkedList<Integer> nodes) {
+	public String getSharedPerm(String perm, LinkedList<Integer> nodes, LinkedList<Integer>[] graph) {
 		String res = "";
 		for (int i = 0; i < this.nodes.size(); i++)
 			if (nodes.contains(this.nodes.get(i)) && perm.charAt(nodes.indexOf(this.nodes.get(i))) == '1')
 				res += '1';
-			else
-				res += '0';
+			else {
+				for (int j = 0; j < perm.length(); j++)
+					if (perm.charAt(j) == '1' && graph[j].contains(nodes.indexOf(this.nodes.get(i)))) {
+						res += '-';
+						break;
+					}
+				if (i == res.length())
+					res += '0';
+
+			}
 		return res;
 	}
 
@@ -118,5 +128,13 @@ public class Node {
 		for (int i : indSets)
 			System.out.print(i + " ");
 		System.out.println();
+	}
+
+	public int getMaxSol() {
+		int max = 0;
+		for (int i : indSets)
+			if (max < i)
+				max = i;
+		return max;
 	}
 }
