@@ -51,9 +51,10 @@ public class Node {
 					for (int j = 0; j < perm.length(); j++)
 						if (perm.charAt(j) == '1')
 							m--;
-					max = m;// max += m > 0 ? m : 0;
+					max += m > 0 ? m : 0;
 				}
-				indSets[i] = addSol(permutations[i]) + max;
+
+				indSets[i] = addSol(permutations[i]) > 0 ? addSol(permutations[i]) + max : -1;
 			}
 		}
 		visited = true;

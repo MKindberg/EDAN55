@@ -14,7 +14,7 @@ public class IndSetTree {
 
 	public static void main(String[] args) {
 		IndSetTree i = new IndSetTree();
-		i.readInput(".\\Graphs\\web1");
+		i.readInput(".\\Graphs\\ThomsenGraph");
 		i.solve();
 	}
 
@@ -22,7 +22,7 @@ public class IndSetTree {
 		for (int i = tree.length - 1; i >= 0; i--) {
 			tree[i].solveNode();
 			System.out.print(i + ": ");
-			System.out.println(tree[i].getMaxSol());
+			tree[i].printSol();
 		}
 		IndSet ind = new IndSet();
 		System.out.println(ind.R2(G));
